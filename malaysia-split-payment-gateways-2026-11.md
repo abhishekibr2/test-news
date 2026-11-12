@@ -80,6 +80,43 @@
 
 ---
 
+## 4A. Payout and deposit charges, read from the live official pages (12 Nov 2026)
+
+These figures were read from each gateway's live pricing page, docs and T&Cs in a browser, not from search summaries. Fees are subject to 8% SST.
+
+### What each gateway charges to pay you out, pay split recipients, and hold deposits
+
+| Gateway | Settlement payout to **your own** bank | Payout to **split recipients / third parties** | Upfront deposit / prepaid balance | Reserve / withholding | Min. settlement | Other payout-related fees |
+|---|---|---|---|---|---|---|
+| **CHIP** | **Free.** Fees are deducted before net settlement. FPX and DuitNow QR next day; cards and e-wallets every 2 business days. | **CHIP Send: RM1.00 per successful transfer, real-time.** **RM1.00 one-time per recipient bank account** verified. Allocating budget from collections is free. | No fixed amount published. The ToS (cl. 7.5) says merchants **agree to pay a security deposit**, adjustable at CHIP's discretion and **returned 6 months after termination** without interest. Some merchants are waived. | Rolling reserve of up to **180 days** can be imposed (cl. 6.10), mainly for platform/sub-merchant models. Prepayment models may use a trust account. | Carried forward if below the minimum (amount not published) | Telegraphic transfer fee if settling to an overseas account. Refunds: FPX B2C RM1 / B2B RM2. |
+| **Billplz** | **Free.** FPX: the full collection is paid out the next business day (excluding Fri/Sat/Sun cut-offs), minimum RM0.01. Card T+2. Wallet next day. | **Payment Order (DuitNow Transfer): RM1.25 (Basic) / RM0.75 (Standard) per transfer, real-time.** You must **pre-load a "Payment Order Limit"** with the amount to pay out. Split Payment itself: no fee listed. | **Prepaid Billplz Credit** pays FPX fees, membership, Payment Order fees and activation fees. **Self-reload minimum RM2, maximum balance RM30,000.** Auto-reload deducts from the next day's collection if the balance goes negative. ⚠️ **Unused paid credit is forfeited every 31 Dec** and reissued as "free credit". Credit expires 365 days after the last activity. | Not specified | RM0.01 (FPX) | **RM50 non-refundable activation fee each for DuitNow QR and Visa/Mastercard.** Shopify +0.30%. FPX fees are non-refundable. |
+| **Razorpay Curlec** | **Free** (standard settlement after fees). **T+2 working days**, varying by risk and vertical. Partial settlements happen if your balance is short. | **Route transfer fee: charged as a % of each amount transferred to a Linked Account, on top of the gateway fee on the full payment.** The official worked example uses **0.25%** (RM90 transfer → RM0.22). The actual rate comes from your agreed pricing plan. You need enough balance to cover all transfers and fees. Standalone Payouts product: "Get in touch for pricing". | None published | Can hold settlements (dashboard "settlements on hold"). Amount not published. | n/a | **Refund RM0.50 flat**, and the original MDR is not returned. Plans: **Basic RM0 setup** or **Premium RM999 one-time** (lower MDR), no annual fee. |
+| **toyyibPay** | Settlement 1–4 business days (Standard) or up to 10 days (Santai). Payout fee not published, but the T&C reserves the right to charge "Settlement, Refund, Reimbursement, Chargeback" fees per the fee schedule. | Split Payment (FPX only, to toyyibPay users): no fee published | None published | **All settlements are withheld until KYC is approved** (held in a non-interest trust account). A **non-interest reserve** can be held for fraud reviews and disputes. | Not published | — |
+| **senangPay** | Settlement is the transaction amount minus Charges. The T&C definition of Charges includes **"withdrawal fees"**, but no amount is published. | Split / mass payments: Enterprise quote | None published | **"Withhold"**: a % of settlement can be held against chargeback risk; disputed amounts are withheld until resolved. | **RM100** (earlier help guide) | RM90 chargeback contest fee. RM12.75 fee to fix a wrong bank account. |
+| **HitPay** | **Free.** FPX T+1. Cards from T+1 (set case by case by Compliance; paid out via Stripe). DuitNow and e-wallets T+2. | **Platform Partners: no transfer fee.** Each sub-merchant is paid **directly to its own bank account**; your commission (%, or fixed `platform_commission_amount`) is auto-deducted. | None | Payout schedule is set by Compliance case by case | n/a | Refund: no extra fee (original fee kept). Chargeback: amount + fee deducted, refunded if you win. 1% FX markup on foreign-currency payments. |
+| **Fiuu** | Weekly (Thursday) for cards and DuitNow; T+2 for local e-wallets *(2024 rate sheet; not on the live site)* | Marketplace Payment: quote only | Reserve / security deposit shown as N/A on the 2024 sheet | — | **RM100** (2024 sheet) | FPX refund RM0.70. Merchant pays telegraphic transfer charges. |
+| **Xendit** | Own-bank withdrawal free (from earlier research; the live page was blocked by a Cloudflare bot check) | Disbursement 1% (min RM1.50) + RM0.90 | — | — | — | Refund +RM0.90. Chargeback USD 25. |
+
+### Worked example: RM100 sale split RM70 to a vendor and RM30 kept by you, paid by FPX
+
+| Gateway | Collection fee | Split / payout fee | Total cost to you |
+|---|---|---|---|
+| **CHIP** (pay the vendor via CHIP Send) | RM1.00 | RM1.00 per transfer (+RM1 one-time per new vendor account) | **RM2.00** (+ SST) |
+| **Billplz Standard** (Split Rule) | RM0.75 from credit | Split: no fee listed | **RM0.75** (+ RM999/yr membership) |
+| **Billplz Basic** (pay out via Payment Order) | RM1.25 | RM1.25 | **RM2.50** |
+| **Curlec Basic** (Route) | 1.5% = RM1.50 | 0.25% × RM70 = RM0.18 (example rate) | **~RM1.68** |
+| **HitPay** (vendor as a sub-merchant; the vendor pays the MDR) | 1.8% + RM0.40 = RM2.20 | RM0 | **RM2.20**, borne by the vendor |
+| **toyyibPay** (split API) | RM1.00 | No fee published | **RM1.00** |
+
+For DuitNow QR instead of FPX, the collection fees become CHIP 1.0%, Billplz 1.5%, HitPay 1.2%, toyyibPay 1% or RM1, and Curlec DuitNow Pay 1.2% (min RM0.30). Billplz and toyyibPay split rules only work on FPX, so a DuitNow split there needs a separate payout: Billplz Payment Order costs RM0.75–1.25.
+
+### Corrections to earlier tables (from the live pages)
+- **CHIP e-wallets:** 1.4% flat (live pricing page), not 0.95–1.15%. Stablecoin collection is also available at 1.5%.
+- **Billplz:** the RM50 activation fee **applies** to both DuitNow QR and cards (live T&C). FPX B2B is RM3.00 (Basic) / RM2.00 (Standard). An "Auto-Deduct" card method costs 2.3% + 1.25 (Basic) / 2% + 0.75 (Standard).
+- **Curlec plans:** **Basic** has RM0 setup with the rates shown above. **Premium** is **RM999 one-time** with lower rates (FPX 1.0% or RM1, DuitNow Pay 1.0% or RM0.30, cards 2.00%, foreign 3.10%). Neither has an annual fee.
+
+---
+
 ## 5. Recommendation
 
 1. **Best overall for split + DuitNow on a budget: CHIP.**
